@@ -298,8 +298,9 @@ class CVAELatentsMixin:
             for condition, label in self.model.condition_encoder.items():
                 labels[c == condition] = label
             c = torch.tensor(labels, device=device)
-
-        x = torch.tensor(x)
+        
+        # For me x was a scipy sparse matrix -> need to be converted to numpy array
+        x = torch.tensor(x.A)
 
         latents = []
         indices = torch.arange(x.size(0))
